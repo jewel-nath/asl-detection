@@ -1,18 +1,21 @@
 import cv2
-from HandDetector import HandDetector
-from ImageClassification import Classifier
+from hand_detector import HandDetector
+from image_classification import Classifier
 import math 
 import torch
 import joblib
 import numpy as np
 import torch.nn.functional as F
+import os
 import cnn_models
 
+ROOT_PATH = os.path.realpath(os.path.join(__file__, '..', '..'))
+
 # load label binarizer
-lb = joblib.load('../outputs/lb.pkl')
+lb = joblib.load(os.path.join(ROOT_PATH, 'assets', 'models', 'lb.pkl'))
 
 model = cnn_models.CustomCNN()
-model.load_state_dict(torch.load('../outputs/model.pth'))
+model.load_state_dict(torch.load(os.path.join(ROOT_PATH, 'assets', 'models', 'model.pth')))
 print(model)
 print('Model loaded')
 

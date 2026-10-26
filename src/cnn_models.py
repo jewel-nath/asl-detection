@@ -1,12 +1,17 @@
+# Adapted from "American Sign Language Recognition using Deep Learning" by Sovit Ranjan Rath, DebuggerCafe, 2020
+# (https://debuggercafe.com/american-sign-language-recognition-using-deep-learning/).
 import torch.nn as nn
 import torch.nn.functional as F
 import joblib
+import os
+
+ROOT_PATH = os.path.realpath(os.path.join(__file__, '..', '..'))
 
 from torchvision import models
 
 # load the binarized labels
 print('Loading label binarizer...')
-lb = joblib.load('../outputs/lb.pkl')
+lb = joblib.load(os.path.join(ROOT_PATH, 'assets', 'models', 'lb.pkl'))
 
 class CustomCNN(nn.Module):
     def __init__(self):

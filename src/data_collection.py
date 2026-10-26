@@ -1,15 +1,19 @@
 import cv2
-from HandDetector import HandDetector
+from hand_detector import HandDetector
 import numpy as np 
 import math 
-import time 
+import time
+import os
+
+ROOT_PATH = os.path.realpath(os.path.join(__file__, '..', '..'))
 
 cap = cv2.VideoCapture(2)
 detector = HandDetector(maxHands=1)
 offset = 20
 imgSize = 300
 
-folder = "Data/0"
+folder = os.path.join(ROOT_PATH, 'data', 'collected', '0')
+os.makedirs(folder, exist_ok=True)
 counter = 0
 
 while True:

@@ -1,6 +1,8 @@
+# Adapted from "American Sign Language Recognition using Deep Learning" by Sovit Ranjan Rath, DebuggerCafe, 2020
+# (https://debuggercafe.com/american-sign-language-recognition-using-deep-learning/).
 '''
 USAGE:
-python train.py --epochs 10
+python src/train.py --epochs 10
 '''
 
 import pandas as pd
@@ -17,7 +19,10 @@ import torch.optim as optim
 import torchvision.transforms as transforms
 import time
 import cv2
+import os
 import cnn_models
+
+ROOT_PATH = os.path.realpath(os.path.join(__file__, '..', '..'))
 
 from PIL import Image
 from tqdm import tqdm
@@ -48,7 +53,7 @@ device = ('cuda:0' if torch.cuda.is_available() else 'cpu')
 print(f"Computation device: {device}")
 
 # read the data.csv file and get the image paths and labels
-df = pd.read_csv('../input/data.csv')
+df = pd.read_csv(os.path.join(ROOT_PATH, 'data', 'data.csv'))
 X = df.image_path.values
 y = df.target.values
 
@@ -173,7 +178,7 @@ plt.plot(val_accuracy, color='blue', label='validataion accuracy')
 plt.xlabel('Epochs')
 plt.ylabel('Accuracy')
 plt.legend()
-plt.savefig('../outputs/accuracy.png')
+plt.savefig(os.path.join(ROOT_PATH, 'docs', 'media', 'accuracy.png'))
 plt.show()
  
 # loss plots
@@ -183,9 +188,9 @@ plt.plot(val_loss, color='red', label='validataion loss')
 plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.legend()
-plt.savefig('../outputs/loss.png')
+plt.savefig(os.path.join(ROOT_PATH, 'docs', 'media', 'loss.png'))
 plt.show()
 
 # save the model to disk
 print('Saving model...')
-torch.save(model.state_dict(), '../outputs/model.pth')
+torch.save(model.state_dict(), os.path.join(ROOT_PATH, 'assets', 'models', 'model.pth'))

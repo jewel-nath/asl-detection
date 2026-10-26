@@ -1,14 +1,18 @@
+# Adapted from "American Sign Language Recognition using Deep Learning" by Sovit Ranjan Rath, DebuggerCafe, 2020
+# (https://debuggercafe.com/american-sign-language-recognition-using-deep-learning/).
 import pandas as pd
 import numpy as np
 import os
 import joblib
+
+ROOT_PATH = os.path.realpath(os.path.join(__file__, '..', '..'))
 
 from sklearn.preprocessing import LabelBinarizer
 from tqdm import tqdm
 from imutils import paths
 
 # get all the image paths
-image_paths = list(paths.list_images('../input/preprocessed_image'))
+image_paths = list(paths.list_images(os.path.join(ROOT_PATH, 'data', 'preprocessed-image')))
 
 # create a DataFrame 
 data = pd.DataFrame()
@@ -38,10 +42,10 @@ for i in range(len(labels)):
 data = data.sample(frac=1).reset_index(drop=True)
 
 # save as CSV file
-data.to_csv('../input/data.csv', index=False)
+data.to_csv(os.path.join(ROOT_PATH, 'data', 'data.csv'), index=False)
 
 # pickle the binarized labels
 print('Saving the binarized labels as pickled file')
-joblib.dump(lb, '../outputs/lb.pkl')
+joblib.dump(lb, os.path.join(ROOT_PATH, 'assets', 'models', 'lb.pkl'))
 
 print(data.head(10))

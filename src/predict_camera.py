@@ -1,6 +1,8 @@
+# Adapted from "American Sign Language Recognition using Deep Learning" by Sovit Ranjan Rath, DebuggerCafe, 2020
+# (https://debuggercafe.com/american-sign-language-recognition-using-deep-learning/).
 '''
 USAGE:
-python cam_test.py 
+python src/predict_camera.py
 '''
 
 import torch
@@ -11,14 +13,17 @@ import cv2
 import argparse
 import torch.nn.functional as F
 import time
+import os
 import cnn_models
+
+ROOT_PATH = os.path.realpath(os.path.join(__file__, '..', '..'))
  
 
 # load label binarizer
-lb = joblib.load('../outputs/lb.pkl')
+lb = joblib.load(os.path.join(ROOT_PATH, 'assets', 'models', 'lb.pkl'))
 
 model = cnn_models.CustomCNN()
-model.load_state_dict(torch.load('../outputs/model.pth'))
+model.load_state_dict(torch.load(os.path.join(ROOT_PATH, 'assets', 'models', 'model.pth')))
 print(model)
 print('Model loaded')
 
@@ -37,7 +42,8 @@ frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
 
 # define codec and create VideoWriter object
-out = cv2.VideoWriter('../outputs/asl.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width,frame_height))
+os.makedirs(os.path.join(ROOT_PATH, 'outputs'), exist_ok=True)
+out = cv2.VideoWriter(os.path.join(ROOT_PATH, 'outputs', 'asl.mp4'), cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width,frame_height))
 
 # read until end of video
 while(cap.isOpened()):

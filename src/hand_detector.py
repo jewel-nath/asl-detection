@@ -1,3 +1,5 @@
+# Adapted from cvzone by Computer Vision Zone (https://github.com/cvzone/cvzone), MIT licence,
+# Copyright (c) 2021 Vizdx LLC, Computer Vision Zone; the full licence is in LICENSES/cvzone.txt.
 import cv2
 import mediapipe as mp
 
